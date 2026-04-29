@@ -1,9 +1,9 @@
 from datetime import timedelta
 from django.conf import settings
-from django.core.url import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models import Q
-from django.db.model.signals import pre_save, post_save
+from django.db.models.signals import pre_save, post_save
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager
 )

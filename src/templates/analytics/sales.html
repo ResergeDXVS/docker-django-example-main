@@ -5,4 +5,43 @@
         <h1>Ventas</h1>
     </div>
 </div>
+
+<div class="row">
+    <div class="column">
+        <p>Recientes</p>
+        <ol>
+            {% for order in recent_orders %}
+            <li>
+                {{order.order_id}}
+                {{order.total}}
+                {{order.updated}}
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div class="column">
+        <p>Enviados</p>
+        <ol>
+            {% for order in shipped_orders %}
+            <li>
+                {{order.order_id}}
+                {{order.total}}
+                {{order.updated}}
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <div class="column">
+        <p>Pagados</p>
+        <ol>
+            {% for order in paid_orders %}
+            <li>
+                {{order.order_id}}
+                {{order.total}}
+                {{order.updated}}
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
 {% endblock %}

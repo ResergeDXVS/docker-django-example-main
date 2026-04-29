@@ -6,10 +6,12 @@ from accounts.models import GuestEmail
 User = settings.AUTH_USER_MODEL
 
 class BillingProfile(models.Model):
-    user = models.OneToOneField(User, null=True, blank=True)
+    user = models.OneToOneField(User, null=True, blank=True, on_delete=models.DO_NOTHING)
     email = models.EmailField()
     active = models.BooleanField(default=True)
     update = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     customer_id = models.CharField(max_length=120, null=True, blank=True)
     
+    def __str__(self):
+        return self.email
