@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>Detalle de Venta {{ sale.id }}</h1>
+        <p>Cliente: {{ sale.customer_name }}</p>
+        <p>Fecha: {{ sale.date }}</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for detail in sale.details.all %}
+                <tr>
+                    <td>{{ detail.product.product_name }}</td>
+                    <td>{{ detail.quantity }}</td>
+                    <td>{{ detail.subtotal }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No hay productos en esta venta.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
