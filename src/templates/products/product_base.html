@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> {% block title %}Ventana de productos{% endblock title %}</title>
+        <style>
+            .red_line{
+                background-color:#FFC7BD;
+                text-align:center;
+            }
+            .blue_line{
+                background-color:#BDF8FF;
+                text-align:center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Ejemplo Ecommerce</h1>
+        {% block content %}{% endblock content %}
+    </body>
+    <footer>
+        <p>Ecommerce. SA de CV.</p>
+    </footer>
+</html>

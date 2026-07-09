@@ -1,0 +1,45 @@
+{% extends "products/product_base.html" %}
+{% block title %}
+Lista de productos
+{% endblock title %}
+{% block content %}
+<table>
+    {% include "products/product_title_info.html" with titulo="Lista de productos actualizada" horario=consult_time %}
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Producto digital</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for obj in list_prod %}
+            <tr 
+                {% if forloop.counter|divisibleby:2 %}
+                    class="red_line"
+                {% else %}
+                    class="blue_line"
+                {% endif %}>
+                <td>
+                    {{ obj.id }}
+                </td>
+                <td>
+                    {{ obj.title|upper }}
+                </td>
+                <td>
+                    ${{ obj.price }}
+                </td>
+                <td>
+                    {{ obj.is_digital|yesno}}
+                </td>
+                
+            </tr>
+        {% endfor %}
+        
+    </tbody>
+</table>
+{% endblock content %}
+
+
+

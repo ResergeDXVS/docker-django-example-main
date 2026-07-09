@@ -1,0 +1,12 @@
+{% extends "products/product_base.html" %}
+{% block title %}
+Crear registro de producto
+{% endblock title %}
+{% block content %}
+{% include "products/product_title_info.html" with titulo="Crear productos"%}
+<form method="POST" action=""> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Crear">
+</form>
+{% endblock content %}
