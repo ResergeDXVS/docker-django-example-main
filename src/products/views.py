@@ -85,7 +85,7 @@ class ProductAPIView(views.APIView):
         product.is_digital = bool(request.data.get("is_digital"))
         product.save()
 
-        return Response({"message": "Producto %s actualizado parcialmente con PUT" % product.id})
+        return Response({"message": "Producto %s actualizado con PUT" % product.id})
     
     def patch(self, request):
         id_product = request.data.get("id")
