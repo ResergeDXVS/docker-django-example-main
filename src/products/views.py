@@ -3,8 +3,11 @@ from datetime import datetime
 from products.models import Product
 from products.forms import ProductModelForm
 
-from rest_framework import views
+from rest_framework import views, generics
 from rest_framework.response import Response
+
+from .pagination import ProductCursorPagination
+from .serializers import ProductSerializer
 
 # Create your views here.
 def list_product(request):
@@ -114,3 +117,8 @@ class ProductAPIView(views.APIView):
         product = Product.objects.filter(id=id_product).first()
         product.delete()
         return Response({"message": "Registro con ID %s eliminado" % id_product})
+    
+class ProductListView(generics.ListAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    pagination_class = ProductCursorPagination
