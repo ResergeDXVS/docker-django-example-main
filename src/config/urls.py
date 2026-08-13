@@ -26,6 +26,7 @@ urlpatterns = [
     path("users/",include("users.urls")),
     path("products/",include("products.urls")),
     path("admin/", admin.site.urls),
+    path("account/", include("user_app.urls")),
 ]
 if not settings.TESTING:
     urlpatterns = [

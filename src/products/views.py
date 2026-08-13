@@ -5,6 +5,7 @@ from products.forms import ProductModelForm
 
 from rest_framework import views, generics
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from .pagination import ProductCursorPagination
 from .serializers import ProductSerializer
@@ -122,3 +123,6 @@ class ProductListView(generics.ListAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     pagination_class = ProductCursorPagination
+    permission_classes = [
+        IsAuthenticated
+    ]

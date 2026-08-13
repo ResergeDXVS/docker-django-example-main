@@ -34,6 +34,7 @@ ALLOWED_HOSTS = list(map(str.strip, allowed_hosts.split(",")))
 
 # Application definitions
 INSTALLED_APPS = [
+    "user_app.apps.UserAppConfig",
     "accounts.apps.AccountsConfig",
     "addresses.apps.AddressesConfig",
     "analytics.apps.AnalyticsConfig",
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -188,5 +190,14 @@ if DEBUG:
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        #'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+SIMPLE_JWT = {
+    "ROTATE_REFRESH_TOKENS":True,
 }
