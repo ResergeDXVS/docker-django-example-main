@@ -1,15 +1,40 @@
 from rest_framework import serializers
-GENDER = [
-    ("female","Femenino"),
-    ("male","Masculino"),
-    ("other","Otro")
-]
 
-class UserSerializer(serializers.Serializer):
-    name            = serializers.CharField(max_length=100)
-    paternal_name   = serializers.CharField(max_length=100)
-    maternal_name   = serializers.CharField(max_length=100)
-    age             = serializers.IntegerField()
-    email           = serializers.EmailField()
-    gender          = serializers.ChoiceField(choices=GENDER)
-    phone           = serializers.CharField(max_length=20)
+from users.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = User
+        fields = [
+            "id",
+            "email",
+            "password",
+            "name",
+            "paternal_name",
+            "maternal_name",
+            "age",
+            "gender",
+            "phone",
+            "created_at",
+            "updated_at",
+        ]
+        read_only_fields = ["id", "created_at", "updated_at"]
+
+    def create(self, validated_data):
+        password = validated_data.pop("password", None)
+        user = User(**validated_data)
+        if password:
+            user.set_password(password)
+        user.save()
+        return user
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop("password", None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if password:
+            instance.set_password(password)
+        instance.save()
+        return instance

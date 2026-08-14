@@ -6,6 +6,12 @@ from rest_framework import status
 from rest_framework.viewsets import ViewSet
 from .serializers import UserSerializer
 from .models import User
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
+
+from users.models import User
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 def userCreate(request):
@@ -86,3 +92,36 @@ class APIUser(ViewSet):
             return Response({"error": "Usuario no encontrado"}, status=status.HTTP_404_NOT_FOUND)
         user.delete()
         return Response({"message": f"Usuario con ID {pk} eliminado"}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+
+
+
+class RegisterView(APIView):
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            user = serializer.save()
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "user": UserSerializer(user).data,
+                "refresh": str(refresh),
+                "access": str(refresh.access_token),
+            }, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        """Devuelve los datos del usuario autenticado (requiere JWT válido)"""
+        if not request.user or not request.user.is_authenticated:
+            return Response(
+                {"error": "No autenticado"},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            return [IsAuthenticated()]
+        return []

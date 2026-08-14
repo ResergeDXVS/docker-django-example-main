@@ -45,11 +45,11 @@ INSTALLED_APPS = [
     "pages.apps.PagesConfig",
     "users.apps.UsersConfig",
     "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
     "rest_framework",
     'rest_framework.authtoken'
 ]
@@ -192,8 +192,6 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        #'rest_framework.authentication.BasicAuthentication',
-        #'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
@@ -201,3 +199,5 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS":True,
 }
+
+AUTH_USER_MODEL = "users.User"
